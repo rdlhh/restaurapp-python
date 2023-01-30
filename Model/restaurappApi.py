@@ -64,6 +64,7 @@ def getProducts():
                 productId = dataP["data"][p]["id"]
                 productName = dataP["data"][p]["name"]
                 productDescription = dataP["data"][p]["description"]
+                productPrice = dataP["data"][p]["price"]
                 catID = dataP["data"][p]["category"][0]
                 catName = dataP["data"][p]["category"][1]
                 productCategory = Category(catID,catName,"null","null")
@@ -71,7 +72,7 @@ def getProducts():
                 for nIng in range(len(dataP["data"][p]["ingredients"])):
                      Pingred= dataP["data"][p]["ingredients"][nIng]
                      productIngredients[Pingred]=Pingred
-                productPrice = dataP["data"][p]["price"]
                 newProduct = Product(productId,productName,productDescription,productCategory,productIngredients,productPrice)
                 products[productId] = newProduct
+                
         return products
