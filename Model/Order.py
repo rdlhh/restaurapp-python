@@ -6,7 +6,7 @@ class Order:
         self.__diners = diners
         self.__total = 0
         self.__order = {}
-        self.__state = "C"
+        self.__state = "D"
         
     
     def getTableNum(self):
