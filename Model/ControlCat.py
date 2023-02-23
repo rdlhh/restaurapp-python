@@ -36,7 +36,7 @@ class ControlCat:
             return response
 
     def chargeCategories(self):
-        response = requests.request("GET", "http://localhost:8069/restaurapp_app/getCategory")
+        response = requests.request("GET", "http://localhost:8069/restaurapp_app/category")
         if response.status_code == 200:
             data = response.json()
             for num in range(len(data["data"])):

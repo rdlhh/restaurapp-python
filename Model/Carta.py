@@ -49,6 +49,8 @@ while choice != 5:
                     upCatChoice = int(input("Select: "))
                     if upCatChoice == 1:
                         name = input("New name: ")
+                    if upCatChoice == 2:
+                        break
 
                 jason = {}
                 jason["id"]=idcat
@@ -88,7 +90,7 @@ while choice != 5:
                 price = float(input("Price of the product: "))
                 cat = controllerCAT.chargeCategories()
                 for category in cat:
-                    print("ID:",category, " - Name:", cat[category].getName(), " - Description:", cat[category].getDesc())
+                    print("ID:",category, " - Name:", cat[category].getName())
                 idcat = int(input("Select the category for the product: "))
                 ingre = controllerINGRE.chargeIngredients()
                 ingres = []
@@ -152,6 +154,8 @@ while choice != 5:
                             idingre = int(input("Select the ingredients of the product: "))
                             if idingre ==0:break
                             ingredients.append(idingre)
+                    if upProdChoice == 6:
+                        break
 
                 jason = {}
                 jason["id"]=idprod
