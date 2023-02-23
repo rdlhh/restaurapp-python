@@ -18,7 +18,7 @@ class ControlProduct:
             data = response.json()
             for num in range(len(data["data"])):
                 id = data["data"][num]["id"]
-                name=data["data"][num]["name"]
+                name = data["data"][num]["name"]
                 desc = data["data"][num]["description"]
                 price = data["data"][num]["price"]
                 c = Product(name,desc,price)

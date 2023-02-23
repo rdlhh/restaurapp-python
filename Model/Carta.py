@@ -10,7 +10,7 @@ while choice != 5:
     print("1-CRUD Categories")
     print("2-CRUD Products")
     print("3-CRUD Ingredients")
-    print("4-Order/Table Controll")
+    print("4-Order/Table Control")
     print("5-Exit")
 
     choice = int(input("Select: "))
@@ -224,6 +224,8 @@ while choice != 5:
                         name = input("New name: ")
                     if upIngreChoice == 2:
                         observations = input("New description: ")
+                    if upIngreChoice == 3:
+                        break
 
                 jason = {}
                 jason["id"]=idingre
@@ -249,6 +251,9 @@ while choice != 5:
                     print("Ingredient deleted")
                 else:
                     print(result)
+            
+            if choiceIngre == 4:
+                break
 
     if choice == 4:
         choiceOrder = 0
@@ -258,7 +263,7 @@ while choice != 5:
             print("2-Update a order")
             print("3-Finish a order")
             print("4-List all orders")
-            print("5-Take an order for a table")
+            print("5-Take an order")
             print("6-Edit order list")
             print("7-Exit")
             choiceOrder = int(input("Select: "))
@@ -284,7 +289,7 @@ while choice != 5:
                 for table in tables:
                     if tables[table].getState() != "F":
                         print("ID:",table, " - Num:", tables[table].getNum(), " - Diners:", tables[table].getDiners(), " - Waiter:", tables[table].getWaiter(), " - State:", tables[table].getState())
-                idTable = int(input("Select the table you want to update: "))
+                idTable = int(input("Select the order you want to update: "))
                 upTableChoice = 0
                 num = 0
                 diners = 0
@@ -336,14 +341,14 @@ while choice != 5:
                 for table in tables:
                     if tables[table].getState() != "F":
                         print("ID:",table, " - Num:", tables[table].getNum(), " - Diners:", tables[table].getDiners(), " - Waiter:", tables[table].getWaiter(), " - State:", tables[table].getState())
-                idTable = int(input("Select the table you want to update: "))
+                idTable = int(input("Select the order you want to update: "))
                 jason = {
                     "id": idTable,
                     "state":"F"
                 }
                 result = controllerORDER.finishTable(jason)
                 if result ==True:
-                    print("Table finished")
+                    print("Order finished")
                 else:
                     print(result)
 
@@ -355,7 +360,7 @@ while choice != 5:
                             for order in tables[table].getOrder():
                                 print("\t",tables[table].getOrder()[order].getQuant()," - ",tables[table].getOrder()[order].getProduct().getName()," - ",tables[table].getOrder()[order].getPrice())
                         else:
-                            print("This table has not ordered nothing")
+                            print("Not ordered nothing")
 
             if choiceOrder == 5:
                 for table in tables:
@@ -365,8 +370,8 @@ while choice != 5:
                             for order in tables[table].getOrder():
                                 print("\t",tables[table].getOrder()[order].getQuant()," - ",tables[table].getOrder()[order].getProduct().getName()," - ",tables[table].getOrder()[order].getPrice())
                         else:
-                            print("This table has not ordered anything")
-                idTable = int(input("Select the table: "))
+                            print("Not ordered anything")
+                idTable = int(input("Select the order: "))
                 
                 filterCat = 0
                 cat = controllerCAT.chargeCategories()

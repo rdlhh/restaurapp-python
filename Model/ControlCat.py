@@ -11,7 +11,7 @@ class ControlCat:
         response = requests.post("http://localhost:8069/restaurapp_app/addCat",json=jason).text
         response = json.loads(response)
         if response["result"]["status"] == 201:
-            self.__categories[response["result"]["id"]] = Category(jason["name"])
+            self.__categories[response["result"]["data"]] = Category(jason["name"])
             return True
         else:
             return (response)
@@ -21,7 +21,7 @@ class ControlCat:
         response = json.loads(response)
         if response["result"]["status"] == 201:
             if "name" not in jason: jason["name"] = self.__categories[response["result"]["id"]].getName()
-            self.__categories[response["result"]["id"]] = Category(jason["name"],jason["description"])
+            self.__categories[response["result"]["name"]] = Category(jason["name"],jason["description"])
             return True
         else:
             return (response)
