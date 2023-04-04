@@ -70,8 +70,8 @@ class ControlOrder:
             "price":order.getPrice(),
             "lines":order.getLines()
         }
-        r = requests.post(url=url,json=params)
-        if (r.status_code == 201):
+        response = requests.post(url=url,json=params)
+        if (response.status_code == 201):
             jsonReturned = r.json()
             if (len(jsonReturned) > 0):
                 jsonId = jsonReturned['result']['id']
@@ -95,8 +95,8 @@ class ControlOrder:
             "price":order.getPrice(),
             "lines":order.getLines()
         }
-        r = requests.put(url=url,json=params)
-        if (r.status_code == 200):
+        response = requests.put(url=url,json=params)
+        if (response.status_code == 200):
             return True
         else:
             return False
@@ -106,8 +106,8 @@ class ControlOrder:
         params = {
             "id":id
         }
-        r = requests.delete(url=url,json=params)
-        if (r.status_code == 200):
+        response = requests.delete(url=url,json=params)
+        if (response.status_code == 200):
             return True
         else:
             return False
