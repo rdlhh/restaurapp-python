@@ -20,16 +20,16 @@ class ControlIngredients:
     def updateIngredient(self, jason):
         response = requests.put("http://localhost:8069/restaurapp_app/updateIngredients",json=jason).text
         response = json.loads(response)
-        if response["result"]["status"] == 201:
-            if "name" not in jason: jason["name"] = self.__ingredients[response["result"]["id"]].getName()
-            if "description" not in jason: jason["description"] = self.__ingredients[response["result"]["id"]].getDesc()
-            self.__ingredients[response["result"]["id"]] = Ingredients(jason["name"],jason["description"])
+        if response["result"]["status"] == 200:
+            if "name" not in jason: jason["name"] = self.__ingredients[response["id"]].getName()
+            if "description" not in jason: jason["description"] = self.__ingredients[response["id"]].getDesc()
+            self.__ingredients[response["result"]["data"]] = Ingredients(jason["name"],jason["description"])
             return True
         else:
             return (response)
 
     def deleteIngredient(self, jason):
-        response = requests.delete("http://localhost:8069/restaurapp_app/delIngredient",json=jason).text
+        response = requests.delete("http://localhost:8069/restaurapp_app/delIngredients",json=jason).text
         response = json.loads(response)
         if response["result"]["status"] == 200:
             del self.__ingredients[jason["id"]]

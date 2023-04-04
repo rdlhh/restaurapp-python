@@ -1,52 +1,60 @@
 class Order:
-    def __init__(self,table,diners,waiter,client) -> None:
+    def __init__(self,id,table,client,state,waiter,price,lines):
+        if id == None:
+            self.__id = 0
+        else:
+            self.__id = id
         self.__table = table
         self.__client = client
+        self.__state = state
         self.__waiter = waiter
-        self.__diners = diners
-        self.__total = 0
-        self.__order = {}
-        self.__state = "A"
-        
-    
-    def getTableNum(self):
+        if price == None:
+            self.__price = None
+        else:
+            self.__price = price
+        if lines == None:
+            self.__lines = None
+        else:
+            self.__lines = lines
+
+    def setId(self,id):
+        self.__id = id
+
+    def getId(self):
+        return self.__id
+
+    def getTable(self):
         return self.__table
     
-    def setTableNum(self,table):
-        self.__table = table
+    def setTable(self,t):
+        self.__table = t
 
-    def getOrder(self):
-        return self.__order
-
-    def setOrder(self,order):
-        self.__order = order
-
-    def getDiners(self):
-        return self.__diners
-
-    def setDiners(self,diners):
-        self.__diners = diners
-
-    def getWaiter(self):
-        return self.__waiter
-
-    def setWaiter(self,waiter):
-        self.__waiter = waiter
-    
     def getClient(self):
         return self.__client
 
-    def setClient(self,client):
-        self.__client = client
-
-    def getTotal(self):
-        return self.__total
-
-    def setTotal(self,total):
-        self.__total = total
+    def setClient(self,c):
+        self.__client = c
 
     def getState(self):
         return self.__state
 
-    def setState(self,state):
-        self.__state = state
+    def setState(self,st):
+        self.__state = st
+
+    def getWaiter(self):
+        return self.__waiter
+
+    def setWaiter(self,w):
+        self.__waiter = w
+
+    def getPrice(self):
+        return self.__price
+
+    def setPrice(self,p):
+        self.__price = p
+
+    def getLines(self):
+        return self.__lines
+
+    def setLines(self,l):
+        self.__lines = l

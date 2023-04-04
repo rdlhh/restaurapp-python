@@ -1,4 +1,6 @@
 import ControlCat, ControlIngredients, ControlProduct, ControlOrder
+from Order import Order
+from orderLine import Line
 
 controllerCAT = ControlCat.ControlCat()
 controllerINGRE = ControlIngredients.ControlIngredients()
@@ -10,7 +12,7 @@ while choice != 5:
     print("1-CRUD Categories")
     print("2-CRUD Products")
     print("3-CRUD Ingredients")
-    print("4-Order/Table Control")
+    print("4-CRUD Order")
     print("5-Exit")
 
     choice = int(input("Select: "))
@@ -40,8 +42,7 @@ while choice != 5:
                     print("ID:",category, " - Name:", cat[category].getName())
                 idcat = int(input("Select the category you want to update: "))
                 upCatChoice = 0
-                name=""
-                desc = ""
+                name= ""
                 while upCatChoice != 3:
                     print("1-Change the name")
                     print("2-Exit")
@@ -111,7 +112,7 @@ while choice != 5:
                 }
                 result = controllerPROD.createProduct(jason)
                 if result == True:
-                    print("Prouct added")
+                    print("Product added")
                 else:
                     print(result)
 
@@ -142,7 +143,7 @@ while choice != 5:
                     if upProdChoice == 4:
                         cat = controllerCAT.chargeCategories()
                         for category in cat:
-                            print("ID:",category, " - Name:", cat[category].getName(), " - Description:", cat[category].getDesc())
+                            print("ID:",category, " - Name:", cat[category].getName())
                         category = int(input("New category: "))
                     if upProdChoice == 5:
                         ingre = controllerINGRE.chargeIngredients()
@@ -261,38 +262,52 @@ while choice != 5:
 
     if choice == 4:
         choiceOrder = 0
-        tables = controllerORDER.chargeTable()
         while choiceOrder != 7:
             print("1-Create a order")
-            print("2-Update a order")
-            print("3-Finish a order")
-            print("4-List all orders")
-            print("5-Take an order")
-            print("6-Edit order list")
-            print("7-Exit")
+            print("2-Read")
+            print("3-Update a order")
+            print("4-Delete")
+            print("5-Confirm an order")
+            print("6-Exit")
             choiceOrder = int(input("Select: "))
             if choiceOrder == 1:
-                num = int(input("Num of the table: "))
-                diners = int(input("Number of diners: "))
-                waiter = input("Waiter name: ")
-                client = input("Client name: ")
-                jason = {
-                    "num": num,
-                    "diners":diners,
-                    "client":client,
-                    "waiter":waiter
-                    
-                }
-                result = controllerORDER.createTable(jason)
-                if result == True:
-                    print("Table added")
+                table = input("Number of table: ")
+                client = input("Client: ")
+                waiter = input("Waiter: ")
+                newOrder = Order(None,table,client,'A',waiter,None,None)
+                if controllerORDER.addOrder(newOrder):
+                    print("\tNew order added with id ",newOrder.getId())
                 else:
-                    print(result)
+                    print("\tError. Not added")
+                    break
+                print("1) Add lines to this order")
+                print("0) Exit and continue")
+                opOC = int(input("What do you want to do now?: "))
+                if opOC == 1:
+                    while True:
+                        print("1) Create new line")
+                        print("0) Exit and continue")
+                        opOCC = int(input("Select an option: "))
+                        if opOCC == 0:
+                            break
+                        else:
+                            #MIENTRAS EL USUARIO QUIERA, VAMOS CREANDO LINEAS PARA ESTA ORDEN
+                            print("\nWe have the following products:")
+                            for product in prod:
+                                print("ID:",product, " - Name:", prod[product].getName(), " - Price:", prod[product].getPrice())
+                            productId = int(input("Enter the product to add to this line: "))
+                            quantity = int(input("Enter the quantity for this product: "))
+                            observations = input("Observations: ")
+                            newLine = Line(None,newOrder.getId(),productId,quantity,None,observations)
+                            if controllerORDER.addLine(newLine):
+                                print("New line added with ID: ",newLine.getId())
+                            else:
+                                print("Error. Not added")
 
             if choiceOrder == 2:
                 for table in tables:
                     if tables[table].getState() != "F":
-                        print("ID:",table, " - Num:", tables[table].getNum(), " - Diners:", tables[table].getDiners(), " - Waiter:", tables[table].getWaiter(), " - State:", tables[table].getState())
+                        print("ID:",table, " - Num:", tables[table].getTableNum(), " - Diners:", tables[table].getDiners(), " - Waiter:", tables[table].getWaiter(), " - State:", tables[table].getState())
                 idTable = int(input("Select the order you want to update: "))
                 upTableChoice = 0
                 num = 0
@@ -406,60 +421,8 @@ while choice != 5:
                         print(result)
                     
             if choiceOrder == 6:
-                for table in tables:
-                    if len(tables[table].getOrder())>0:
-                        print("ID:",table, " - Num:", tables[table].getNum(), " - Diners:", tables[table].getDiners(), " - Waiter:", tables[table].getWaiter(), " - State:", tables[table].getState(), " - Total:", tables[table].getTotal())
-                idTable = int(input("Select the table: "))
+                break
 
-                editOrder = 0
-                while editOrder != 3:
-                    print("1-Update an order")
-                    print("2-Delete an order")
-                    print("3-Exit")
-                    
-                    editOrder=int(input("Select an option: "))
-                    if editOrder == 1:
-                        for order in tables[idTable].getOrder():
-                            print("Id:",order," -Quant",tables[idTable].getOrder()[order].getQuant()," - ",tables[idTable].getOrder()[order].getProduct().getName()," - ",tables[idTable].getOrder()[order].getPrice())
-                        idOrder = int(input("Select the order you want to change: "))
-
-                        upOrder = 0
-                        quant = 0
-                        observations = ""
-                        while upOrder !=3:
-                            print("1-Change the quantity")
-                            print("2-Change the observations")
-                            print("3-Exit")
-
-                            upOrder = int(input("Select: "))
-
-                            if upOrder == 1:
-                                quant = int(input("New quantity: "))
-                            if upOrder == 2:
-                                observations = input("New observations: ")
-
-                            jason = {
-                                "id":idOrder
-                            }
-                            if quant != 0:
-                                jason["quant"] = quant
-                            if observations != "":
-                                jason["observations"] = observations
-                            result = controllerORDER.updateOrder(jason, idTable)
-                            if result == True:
-                                print("Order updated")
-                            else:
-                                print(result)
-                    
-                    if editOrder == 2:
-                        for order in tables[idTable].getOrder():
-                            print("Id:",order," -Quant",tables[idTable].getOrder()[order].getQuant()," - ",tables[idTable].getOrder()[order].getProduct().getName()," - ",tables[idTable].getOrder()[order].getPrice())
-                        idOrder = int(input("Select the order you want to delete: "))
-                        jason={
-                            "id":idOrder
-                        }
-                        result = controllerORDER.deleteOrder(jason,idTable)
-                        if result == True:
-                            print("Order deleted")
-                        else:
-                            print(result)
+    if choice == 5:
+        print("Thanks for using RestaurApp! :)")
+        break

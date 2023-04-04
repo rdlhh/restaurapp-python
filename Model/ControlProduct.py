@@ -45,16 +45,16 @@ class ControlProduct:
     def updateProduct(self, jason):
         response = requests.put("http://localhost:8069/restaurapp_app/updateProduct",json=jason).text
         response = json.loads(response)
-        if response["result"]["status"] == 201:
-            if "name" not in jason: jason["name"] = self.__menu[response["result"]["id"]].getName()
-            if "description" not in jason: jason["description"] = self.__menu[response["result"]["id"]].getDesc()
-            if "price" not in jason: jason["price"] = self.__menu[response["result"]["id"]].getPrice()
-            if "category" not in jason: jason["category"] = self.__menu[response["result"]["id"]].getCategory()
-            if "ingredients" not in jason: jason["ingredients"] = self.__menu[response["result"]["id"]].getIngredients()
-            self.__menu[response["result"]["id"]] = Product(jason["name"],jason["description"],jason["price"])
-            self.__menu[response["result"]["id"]].setCategory(controlcat.findCategory(jason["category"]))
+        if response["result"]["status"] == 200:
+            if "name" not in jason: jason["name"] = self.__menu[response["id"]].getName()
+            if "description" not in jason: jason["description"] = self.__menu[response["id"]].getDesc()
+            if "price" not in jason: jason["price"] = self.__menu[response["id"]].getPrice()
+            if "category" not in jason: jason["category"] = self.__menu[response["id"]].getCategory()
+            if "ingredients" not in jason: jason["ingredients"] = self.__menu[response["id"]].getIngredients()
+            self.__menu[response["result"]["data"]] = Product(jason["name"],jason["description"],jason["price"])
+            self.__menu[response["result"]["data"]].setCategory(controlcat.findCategory(jason["category"]))
             for ingre in range(len(jason["ingredients"])):
-                self.__menu[response["result"]["id"]].getIngredients().append(controlingredients.findIngredient(jason["ingredients"][ingre]))
+                self.__menu[response["result"]["data"]].getIngredients().append(controlingredients.findIngredient(jason["ingredients"][ingre]))
             return True
         else:
             return (response)
