@@ -64,24 +64,24 @@ class ControlOrder:
         url = "http://localhost:8069/restaurapp_app/addOrder"
         params = {
             "table":order.getTable(),
-            "client":order.getClient(),
+            "clients":order.getClient(),
             "state":order.getState(),
             "waiter":order.getWaiter(),
-            "price":order.getPrice(),
-            "lines":order.getLines()
+            "tprice":order.getPrice(),
+            "orderLine":order.getLines()
         }
         response = requests.post(url=url,json=params)
-        if (response.status_code == 201):
-            jsonReturned = r.json()
+        if (response.status_code == 200):
+            jsonReturned = response.json()
             if (len(jsonReturned) > 0):
-                jsonId = jsonReturned['result']['id']
+                jsonId = jsonReturned['id']
                 order.setId(jsonId)
                 return True
             else:
                 print("Error posting!")
                 return False
         else:
-            print("*Error posting*")
+            print("Error!")
             return False
 
     def updateOrder(self,order):
@@ -171,13 +171,13 @@ class ControlOrder:
             "order_id":line.getOrderId(),
             "product_id":line.getProductId(),
             "quantity":line.getQuantity(),
-            "observations":line.getObservations()
+            "description":line.getObservations()
         }
         r = requests.post(url=url,json=params)
         if (r.status_code == 200):
             jsonReturned = r.json()
             if (len(jsonReturned) > 0):
-                jsonId = jsonReturned['result']['id']
+                jsonId = jsonReturned['id']
                 line.setId(jsonId)
                 return True
             else:

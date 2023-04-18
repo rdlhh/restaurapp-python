@@ -276,7 +276,7 @@ while choice != 5:
                 waiter = input("Waiter: ")
                 newOrder = Order(None,table,client,'A',waiter,None,None)
                 if controllerORDER.addOrder(newOrder):
-                    print("\tNew order added with id ",newOrder.getId())
+                    print("\tNew order added!")
                 else:
                     print("\tError. Not added")
                     break
@@ -285,6 +285,7 @@ while choice != 5:
                 opOC = int(input("What do you want to do now?: "))
                 if opOC == 1:
                     while True:
+                        prod = controllerPROD.getAllProducts()
                         print("1) Create new line")
                         print("0) Exit and continue")
                         opOCC = int(input("Select an option: "))
@@ -294,13 +295,13 @@ while choice != 5:
                             #MIENTRAS EL USUARIO QUIERA, VAMOS CREANDO LINEAS PARA ESTA ORDEN
                             print("\nWe have the following products:")
                             for product in prod:
-                                print("ID:",product, " - Name:", prod[product].getName(), " - Price:", prod[product].getPrice())
+                                print("ID:",product, " - Name:", prod[product].getName())
                             productId = int(input("Enter the product to add to this line: "))
                             quantity = int(input("Enter the quantity for this product: "))
                             observations = input("Observations: ")
-                            newLine = Line(None,newOrder.getId(),productId,quantity,None,observations)
+                            newLine = Line(None,newOrder.getId(),productId,quantity,observations)
                             if controllerORDER.addLine(newLine):
-                                print("New line added with ID: ",newLine.getId())
+                                print("New line added!")
                             else:
                                 print("Error. Not added")
 
