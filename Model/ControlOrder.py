@@ -24,18 +24,18 @@ class ControlOrder:
             for x in json:
                 idd = x["id"]
                 table = x["table"]
-                client = x["client"]
+                client = x["clients"]
                 state = x["state"]
                 waiter = x["waiter"]
-                price = x["price"]
-                lines = x["lines"]
+                price = x["tPrice"]
+                lines = x["orderLine"]
                 newOrder = Order(idd,table,client,state,waiter,price,lines)
 
         return newOrder
 
     #Return a list of orders
     def getOrders(self):
-        url = "http://localhost:8069/restaurapp_app/getOrders"
+        url = "http://localhost:8069/restaurapp_app/order"
         response = requests.request("GET", url)
         if response.status_code == 200:
             data = response.json()
@@ -50,11 +50,11 @@ class ControlOrder:
         for x in json:
             idd = x["id"]
             table = x["table"]
-            client = x["client"]
+            client = x["clients"]
             state = x["state"]
             waiter = x["waiter"]
-            price = x["price"]
-            lines = x["lines"]
+            price = x["tPrice"]
+            lines = x["orderLine"]
             newOrder = Order(idd,table,client,state,waiter,price,lines)
             listOrders[idd] = newOrder
 
@@ -67,14 +67,14 @@ class ControlOrder:
             "clients":order.getClient(),
             "state":order.getState(),
             "waiter":order.getWaiter(),
-            "tprice":order.getPrice(),
+            "tPrice":order.getPrice(),
             "orderLine":order.getLines()
         }
         response = requests.post(url=url,json=params)
         if (response.status_code == 200):
             jsonReturned = response.json()
             if (len(jsonReturned) > 0):
-                jsonId = jsonReturned['id']
+                jsonId = jsonReturned['result']
                 order.setId(jsonId)
                 return True
             else:
@@ -132,9 +132,9 @@ class ControlOrder:
                 idd = x["id"]
                 orderId = x["order_id"][0]
                 productId = x["product_id"][0]
-                quantity = x["quantity"] 
+                quantity = x["quantity"]
                 fullName = x["fullName"]
-                observations = x["observations"]
+                observations = x["description"]
                 newLine = Line(idd,orderId,productId,quantity,fullName,observations)
 
         return newLine
@@ -158,9 +158,8 @@ class ControlOrder:
             orderId = x["order_id"][0]
             productId = x["product_id"][0]
             quantity = x["quantity"]
-            fullName = x["fullName"]
-            observations = x["observations"]
-            newLine = Line(idd,orderId,productId,quantity,fullName,observations)
+            observations = x["description"]
+            newLine = Line(idd,orderId,productId,quantity,observations)
             listLines[idd] = newLine
 
         return listLines
@@ -177,7 +176,7 @@ class ControlOrder:
         if (r.status_code == 200):
             jsonReturned = r.json()
             if (len(jsonReturned) > 0):
-                jsonId = jsonReturned['id']
+                jsonId = jsonReturned['result']
                 line.setId(jsonId)
                 return True
             else:
@@ -194,12 +193,12 @@ class ControlOrder:
             "order_id":line.getOrderId(),
             "product_id":line.getProductId(),
             "quantity":line.getQuantity(),
-            "observations":line.getObservations()
+            "description":line.getObservations()
         }
         r = requests.put(url=url,json=params)
         if (r.status_code == 200):
             jsonreturned = r.json()
-            newFullName = jsonreturned['result']['full_name']
+            newFullName = jsonreturned['result']
             line.setFullName(newFullName)
             return True
         else:

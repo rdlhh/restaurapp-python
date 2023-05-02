@@ -1,6 +1,6 @@
 class Line():
 
-    def __init__(self,idd,orderId,productId,quantity,observations) -> None:
+    def __init__(self,idd,orderId,productId,quantity,fullName,observations) -> None:
         if idd == None:
             self.__id = 0
         else:
@@ -8,6 +8,10 @@ class Line():
         self.__orderId = orderId
         self.__productId = productId
         self.__quantity = quantity
+        if fullName == None:
+            self.__fullName = "No full name"
+        else:
+            self.__fullName = fullName
         if observations==None or observations==False or observations=="":
             self.__observations = "No observations"
         else:
@@ -37,6 +41,12 @@ class Line():
 
     def setQuantity(self,q):
         self.__quantity = q
+
+    def getFullName(self):
+        return self.__fullName
+
+    def setFullName(self,name):
+        self.__fullName = name
 
     def getObservations(self):
         return self.__observations
