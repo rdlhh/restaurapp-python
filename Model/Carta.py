@@ -267,8 +267,8 @@ while choice != 5:
             print("2-Read")
             print("3-Update a order")
             print("4-Delete")
-            print("5-Confirm an order")
-            print("6-Exit")
+            #print("5-Confirm an order")
+            print("5-Exit")
             choiceOrder = int(input("Select: "))
             if choiceOrder == 1:
                 table = input("Number of table: ")
@@ -299,7 +299,7 @@ while choice != 5:
                             productId = int(input("Enter the product to add to this line: "))
                             quantity = int(input("Enter the quantity for this product: "))
                             observations = input("Observations: ")
-                            newLine = Line(None,newOrder.getId(),productId,quantity,observations)
+                            newLine = Line(None,newOrder.getId(),productId,quantity,None,observations)
                             if controllerORDER.addLine(newLine):
                                 print("New line added!")
                             else:
@@ -436,7 +436,7 @@ while choice != 5:
                             else:
                                 print("\tERROR. Not removed")
 
-            if choiceOrder == 5:
+            if choiceOrder == 7:
                 o = controllerORDER.getOrders()
                 for order in o:
                     print("ID: ", order)
@@ -459,7 +459,7 @@ while choice != 5:
                     else:
                         print("You can't finish this order, is already confirmed")
                     
-            if choiceOrder == 6:
+            if choiceOrder == 5:
                 break
 
     if choice == 5:

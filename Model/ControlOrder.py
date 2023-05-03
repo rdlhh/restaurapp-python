@@ -74,7 +74,7 @@ class ControlOrder:
         if (response.status_code == 200):
             jsonReturned = response.json()
             if (len(jsonReturned) > 0):
-                jsonId = jsonReturned['result']
+                jsonId = jsonReturned['result']['id']
                 order.setId(jsonId)
                 return True
             else:
@@ -158,6 +158,7 @@ class ControlOrder:
             orderId = x["order_id"][0]
             productId = x["product_id"][0]
             quantity = x["quantity"]
+
             observations = x["description"]
             newLine = Line(idd,orderId,productId,quantity,observations)
             listLines[idd] = newLine
@@ -177,10 +178,12 @@ class ControlOrder:
             jsonReturned = r.json()
             if (len(jsonReturned) > 0):
                 jsonId = jsonReturned['result']
+                newFullName = jsonReturned['result']
                 line.setId(jsonId)
+                line.setFullName(newFullName)
                 return True
             else:
-                print("Error posting")
+                print("¡ERROR!")
                 return False
         else:
             print("Error posting")
