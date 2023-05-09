@@ -267,8 +267,8 @@ while choice != 5:
             print("2-Read")
             print("3-Update a order")
             print("4-Delete")
-            #print("5-Confirm an order")
-            print("5-Exit")
+            print("5-Confirm an order")
+            print("6-Exit")
             choiceOrder = int(input("Select: "))
             if choiceOrder == 1:
                 table = input("Number of table: ")
@@ -436,7 +436,7 @@ while choice != 5:
                             else:
                                 print("\tERROR. Not removed")
 
-            if choiceOrder == 7:
+            if choiceOrder == 5:
                 o = controllerORDER.getOrders()
                 for order in o:
                     print("ID: ", order)
@@ -447,19 +447,19 @@ while choice != 5:
                 else:
                     if order.getState() == 'A':
                         print("Order state: ",order.getState())
-                        confirm = int(input("CONFIRM ORDER? (1-YES | 0-NO)"))
+                        confirm = int(input("CONFIRM ORDER? (1-YES | 0-NO) "))
                         if confirm == 1:
-                            if controllerORDER.confirmOrder(order):
-                                print("Order confirmed (state:",order.getState(),")")
+                            if controllerORDER.confirmOrder(idd):
+                                print("Order confirmed (State: ",order.getState(),")")
                             else:
                                 print("Error. Not confirmed")
                         elif confirm == 0:
                             break
 
                     else:
-                        print("You can't finish this order, is already confirmed")
+                        print("ERROR! The order is already confirmed")
                     
-            if choiceOrder == 5:
+            if choiceOrder == 6:
                 break
 
     if choice == 5:
