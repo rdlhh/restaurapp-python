@@ -220,15 +220,13 @@ class ControlOrder:
 
                                                 #Confirm Order#
 
-    def confirmOrder(self,order):
-        url = "http://localhost:8069/restaurapp_app/confirmOrder/"+str(order.getId())
-        response = requests.request("GET",url)
+    def confirmOrder(self,id):
+        url = "http://localhost:8069/restaurapp_app/confirmOrder/"+id
+
+        response = requests.request("GET",url=url)
+        
         if response.status_code == 200:
-            data = response.json()
+            return True
         else:
             print("ERROR CONFIRMING")
             return None
-
-        state = data['stateOrder']
-        order.setState(state)
-        return True
