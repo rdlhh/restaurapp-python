@@ -476,6 +476,7 @@ while choice != 5:
             if invoice.getState() == 'D':
                 if controllerINVOICE.confirmInvoice(id):
                     print("Invoice confirmed!")
+                    break
                 else:
                     print("Error. Invoice not confirmed")
             else:
