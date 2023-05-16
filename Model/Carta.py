@@ -1,4 +1,4 @@
-import ControlCat, ControlIngredients, ControlProduct, ControlOrder
+import ControlCat, ControlIngredients, ControlProduct, ControlOrder, ControlInvoice
 from Order import Order
 from orderLine import Line
 
@@ -6,6 +6,7 @@ controllerCAT = ControlCat.ControlCat()
 controllerINGRE = ControlIngredients.ControlIngredients()
 controllerPROD = ControlProduct.ControlProduct()
 controllerORDER = ControlOrder.ControlOrder()
+controllerINVOICE = ControlInvoice.ControlInvoice()
 
 choice = 0
 while choice != 5:
@@ -13,7 +14,8 @@ while choice != 5:
     print("2-CRUD Products")
     print("3-CRUD Ingredients")
     print("4-CRUD Order")
-    print("5-Exit")
+    print("5-Confirm Invoice")
+    print("6-Exit")
 
     choice = int(input("Select: "))
 
@@ -463,5 +465,23 @@ while choice != 5:
                 break
 
     if choice == 5:
+        inv = controllerINVOICE.getInvoices()
+        for invoice in inv:
+            print("\t ID: ",invoice," - Ref: ",inv[invoice].getRef(),", Date: ",inv[invoice].getDate(),", Total: ",inv[invoice].getTotal(),"€, Client: ",inv[invoice].getClient())
+        id = input("Wich order do you want to continue? ")
+        invoice = controllerINVOICE.getInvoiceById(id)
+        if invoice == None:
+            print("This invoice doesn't exists")
+        else:
+            if invoice.getState() == 'D':
+                if controllerINVOICE.confirmInvoice(id):
+                    print("Invoice confirmed!")
+                else:
+                    print("Error. Invoice not confirmed")
+            else:
+                print("Error!")
+                break
+
+    if choice == 6:
         print("Thanks for using RestaurApp! :)")
         break
