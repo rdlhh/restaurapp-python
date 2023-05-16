@@ -459,7 +459,7 @@ while choice != 5:
                             break
 
                     else:
-                        print("ERROR! The order is already confirmed")
+                        print("ERROR! The order is already confirmed!")
                     
             if choiceOrder == 6:
                 break
@@ -479,8 +479,9 @@ while choice != 5:
                     break
                 else:
                     print("Error. Invoice not confirmed")
+                    break
             else:
-                print("Error!")
+                print("Error! The invoice is already confirmed!")
                 break
 
     if choice == 6:
