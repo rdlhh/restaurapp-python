@@ -468,7 +468,7 @@ while choice != 5:
         inv = controllerINVOICE.getInvoices()
         for invoice in inv:
             print("\t ID: ",invoice," - Ref: ",inv[invoice].getRef(),", Date: ",inv[invoice].getDate(),", Total: ",inv[invoice].getTotal(),"€, Client: ",inv[invoice].getClient())
-        id = input("Wich order do you want to continue? ")
+        id = input("Wich invoice do you want to confirm? ")
         invoice = controllerINVOICE.getInvoiceById(id)
         if invoice == None:
             print("This invoice doesn't exists")
@@ -485,5 +485,5 @@ while choice != 5:
                 break
 
     if choice == 6:
-        print("Thanks for using RestaurApp! :)")
+        print("BYE! Thanks for using RestaurApp! :)")
         break
