@@ -9,7 +9,7 @@ controllerORDER = ControlOrder.ControlOrder()
 controllerINVOICE = ControlInvoice.ControlInvoice()
 
 choice = 0
-while choice != 5:
+while choice != 6:
     print("1-CRUD Categories")
     print("2-CRUD Products")
     print("3-CRUD Ingredients")
@@ -476,13 +476,10 @@ while choice != 5:
             if invoice.getState() == 'D':
                 if controllerINVOICE.confirmInvoice(id):
                     print("Invoice confirmed!")
-                    break
                 else:
                     print("Error. Invoice not confirmed")
-                    break
             else:
                 print("Error! The invoice is already confirmed!")
-                break
 
     if choice == 6:
         print("BYE! Thanks for using RestaurApp! :)")
